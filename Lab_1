@@ -1,0 +1,10 @@
+drop table INSTRUCTOR
+create table INSTRUCTOR (ins_id int PRIMARY KEY NOT NULL, lastname varchar (60) NOT NULL, firstname varchar (60) NOT NULL, city varchar (30), country char (2))
+INSERT INTO INSTRUCTOR (ins_id, lastname, firstname, city, country) values (1, 'Ahuja', 'Rav', 'Toronto', 'CA')
+INSERT INTO INSTRUCTOR (ins_id, lastname, firstname, city, country) values (2, 'Chong', 'Raul', 'Toronto', 'CA'), (3, 'Vasudevan', 'Hima', 'Chicago', 'US') 
+/* note to self - commas are required between each value group being inserted */
+select * from INSTRUCTOR
+select firstname, lastname, country from INSTRUCTOR where city = 'Toronto'
+UPDATE INSTRUCTOR SET city = 'Markham' WHERE firstname = 'Rav'
+DELETE from INSTRUCTOR where lastname = 'Chong'
+select * from INSTRUCTOR
