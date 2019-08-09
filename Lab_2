@@ -1,0 +1,90 @@
+------------------------------------------
+--DDL statement for table 'HR' database (provided by instructor)--
+--------------------------------------------
+
+CREATE TABLE EMPLOYEES (
+                            EMP_ID CHAR(9) NOT NULL, 
+                            F_NAME VARCHAR(15) NOT NULL,
+                            L_NAME VARCHAR(15) NOT NULL,
+                            SSN CHAR(9),
+                            B_DATE DATE,
+                            SEX CHAR,
+                            ADDRESS VARCHAR(30),
+                            JOB_ID CHAR(9),
+                            SALARY DECIMAL(10,2),
+                            MANAGER_ID CHAR(9),
+                            DEP_ID CHAR(9) NOT NULL,
+                            PRIMARY KEY (EMP_ID));
+                            
+  CREATE TABLE JOB_HISTORY (
+                            EMPL_ID CHAR(9) NOT NULL, 
+                            START_DATE DATE,
+                            JOBS_ID CHAR(9) NOT NULL,
+                            DEPT_ID CHAR(9),
+                            PRIMARY KEY (EMPL_ID,JOBS_ID));
+ 
+ CREATE TABLE JOBS (
+                            JOB_IDENT CHAR(9) NOT NULL, 
+                            JOB_TITLE VARCHAR(15) ,
+                            MIN_SALARY DECIMAL(10,2),
+                            MAX_SALARY DECIMAL(10,2),
+                            PRIMARY KEY (JOB_IDENT));
+
+CREATE TABLE DEPARTMENTS (
+                            DEPT_ID_DEP CHAR(9) NOT NULL, 
+                            DEP_NAME VARCHAR(15) ,
+                            MANAGER_ID CHAR(9),
+                            LOC_ID CHAR(9),
+                            PRIMARY KEY (DEPT_ID_DEP));
+
+CREATE TABLE LOCATIONS (
+                            LOCT_ID CHAR(9) NOT NULL,
+                            DEP_ID_LOC CHAR(9) NOT NULL,
+                            PRIMARY KEY (LOCT_ID,DEP_ID_LOC));
+                            
+------------------------------------------
+--My code below--
+--------------------------------------------                            
+                          
+-- Q1 --
+select * from Employees 
+where address like '%Elgin,IL%'; 
+/* remember to include a semicolon as a statement terminator in SQL */
+
+-- Q2 --
+select * from Employees 
+where B_DATE like '%197%';
+
+-- Q3 --
+select * from Employees 
+where DEP_ID=5 and Salary between 60000 and 70000;
+
+-- Q4 --
+select * from Employees 
+ORDER BY DEP_ID;
+
+select * from Employees 
+ORDER BY DEP_ID desc, L_NAME desc;
+
+-- Q5 -- 
+select DEP_ID, count(*) from Employees GROUP BY DEP_ID;
+/* select both DEP_ID and the count function in order to add in a labeled column of DEP IDs.
+Otherwise, the counted results will be unlabeled and can't be distinguished. */
+
+select DEP_ID, avg(salary) as AVG_SALARY, 
+count(*) as Total_Employees from Employees GROUP BY DEP_ID;
+
+select DEP_ID, avg(salary) as "AVG_SALARY", 
+count(*) as "NUM_EMPLOYEES" from Employees GROUP BY DEP_ID;
+
+select DEP_ID, avg(salary) as "AVG_SALARY", count(*) as "NUM_EMPLOYEES" 
+from Employees 
+GROUP BY DEP_ID
+ORDER BY AVG_SALARY;
+
+select DEP_ID, avg(salary) as "AVG_SALARY", COUNT(*) AS "NUM_EMPLOYEES"
+from Employees 
+GROUP BY DEP_ID 
+HAVING COUNT < 4
+ORDER BY AVG_SALARY;
+/* note: WHERE is for filtering the entire result set, while HAVING is applied to post-grouping results */
